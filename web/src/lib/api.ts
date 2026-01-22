@@ -21,6 +21,11 @@ export interface WebSecurityAnalysis {
     subject: Record<string, string> | string;
     issuer: Record<string, string> | string;
     expires?: string | null;
+    days_until_expiry?: number | null;
+    expiration_warning?: "critical" | "warning" | "info" | null;
+    tls_version?: string | null;
+    cipher_suite?: string | null;
+    cipher_strength?: number | null;
     error?: string;
   };
   dns_records?: {
@@ -29,14 +34,39 @@ export interface WebSecurityAnalysis {
     mx: string[];
     ns: string[];
     txt: string[];
+    email_security?: {
+      spf_present: boolean;
+      spf_record?: string | null;
+      dmarc_present: boolean;
+      dmarc_record?: string | null;
+      dkim_selectors: string[];
+    };
+  };
+  dnssec?: {
+    enabled: boolean;
+    valid: boolean;
+    dnskeys: string[];
+    error?: string | null;
   };
   http_headers?: {
     security_headers?: Record<string, any>;
-    all_headers?: Record<string, string>;
+    headers?: Record<string, string>;
+    protocol_version?: "http/1.1" | "http/2" | "http/3";
+    response_time_ms?: number | null;
+    performance_warning?: "slow" | "very_slow" | null;
+    error?: string | null;
   };
   security_headers_analysis?: {
     percentage: number;
     headers: Record<string, { present: boolean; value?: string }>;
+  };
+  csp_analysis?: {
+    directives: Record<string, string>;
+    unsafe_inline: boolean;
+    unsafe_eval: boolean;
+    missing_default_src: boolean;
+    issues: string[];
+    error?: string;
   };
   security_txt?: {
     present: boolean;
@@ -71,7 +101,13 @@ export interface WebSecurityAnalysis {
       httponly: boolean;
       domain?: string;
       path?: string;
+      samesite?: string;
+      security_issues?: string[];
     }>;
+    security_score?: number;
+    total_cookies?: number;
+    insecure_count?: number;
+    error?: string | null;
   };
   redirects?: {
     chain: Array<{
@@ -80,6 +116,36 @@ export interface WebSecurityAnalysis {
     }>;
   };
   metadata?: Record<string, any>;
+  robots_txt?: {
+    present: boolean;
+    content?: string;
+    disallowed_paths: string[];
+    sitemaps: string[];
+    error?: string | null;
+  };
+  mixed_content?: {
+    present: boolean;
+    resources: Array<{
+      type: string;
+      url: string;
+      tag: string;
+    }>;
+    error?: string | null;
+  };
+  open_redirects?: {
+    vulnerable: boolean;
+    vulnerabilities: Array<{
+      parameter: string;
+      test_url: string;
+      redirect_to: string;
+      status_code: number;
+    }>;
+    error?: string | null;
+  };
+  subdomains?: {
+    discovered: string[];
+    error?: string | null;
+  };
   error?: string;
 }
 
