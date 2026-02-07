@@ -17,6 +17,33 @@ This repository contains **monix-core** - the core security logic and analysis e
 For more technical articles and updates, visit: [dineshkorukonda.in/blogs](https://dineshkorukonda.in/blogs)
 
 
+## Testing
+
+Monix includes a comprehensive testing suite covering all major functionality:
+
+### Quick Start
+
+```bash
+# Install test dependencies
+pip install -e ".[dev]"
+
+# Run all tests
+pytest tests/
+
+# Run with coverage
+pytest tests/ --cov=. --cov-report=html
+```
+
+### Test Coverage
+
+The test suite includes:
+- **Unit tests** for core modules (traffic analysis, threat detection, system monitoring)
+- **Integration tests** for API endpoints
+- **CLI tests** for command-line interface
+- **Utility tests** for helper functions
+
+For detailed testing documentation, see [TESTING.md](./TESTING.md)
+
 ## License
 
 MIT License - Developed by [dineshkorukonda.in](https://dineshkorukonda.in)
