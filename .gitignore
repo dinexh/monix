@@ -25,6 +25,13 @@ wheels/
 venv/
 ENV/
 
+# Testing
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+
 # Logs
 *.log
 
